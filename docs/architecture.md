@@ -4,14 +4,14 @@ The brief asks for a federated gateway model (approach A): every network partner
 
 ## The four roles
 
-The brief names four parties. The starter models them as four fictitious organisations, one per role:
+The brief names four parties. The starter does not model those organisations: it uses four fictitious organisations, one per role. Their sites and sizes are invented and say nothing about the real parties.
 
-| Role in the brief | Fictitious organisation in `data/network.yaml` | Own site (fictitious) |
+| Role | Fictitious organisation in `data/network.yaml` | Own site (fictitious) |
 |---|---|---|
-| Minbzk (ministry) | `ministerie` | `min-rc1`: 6 GPUs, small, medium and embedding models |
-| Belastingdienst (executive agency) | `uitvoering` | `uvo-rc1`: 12 faster GPUs, all model sizes |
-| Provincie Zuid-Holland (province) | `provincie` | `prov-dc1`: 4 GPUs, small, medium and embedding models |
-| Municipalities through VNG | `gemeenten` | `gem-shared`: 2 GPUs, only small and embedding models |
+| Ministry | `ministerie` | `min-rc1`: 6 GPUs, small, medium and embedding models |
+| Executive agency | `uitvoering` | `uvo-rc1`: 12 faster GPUs, all model sizes |
+| Province | `provincie` | `prov-dc1`: 4 GPUs, small, medium and embedding models |
+| Municipalities, working together | `gemeenten` | `gem-shared`: 2 GPUs, only small and embedding models |
 
 Plus two sites outside the federation: `onderzoek-ai`, a shared research facility that only takes batch work at night, and `eu-cloud`, a commercial EU provider that only takes public and internal data. All numbers are invented; they are chosen so the scenarios produce contention.
 
