@@ -5,7 +5,7 @@
 > *Shared AI compute between government organisations.*
 >
 > **Put forward by:** Guido Scheuerman (PZH / GovTechNL network / sAIdkick)
-> **Challenge owners:** Guido Scheuerman (PZH, main challenge owner, on behalf of the GovTechNL network), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst, to be confirmed)
+> **Challenge owners:** Guido Scheuerman (PZH, main challenge owner, on behalf of the GovTechNL network), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst)
 > **Contact:** [hack@govtechnl.nl](mailto:hack@govtechnl.nl)
 
 This is an English working translation of the Dutch challenge brief. The authoritative version is the Dutch brief on Alkemio.
@@ -149,6 +149,12 @@ The criteria with IDs (M1 to M5, S1 to S3, X1 to X4, C1 to C3) are in [docs/judg
 **Legal (first exploration, still to be reviewed by the lawyers).** There is no ready-made framework for this combination of a ministry, an executive agency, a province and municipalities. Participation of central government (Minbzk) in a joint arrangement with a province and municipalities is possible, but requires a Royal Decree. A covenant under the existing GDI governance is the more common route. Fiscal secrecy (art. 67 AWR) mainly concerns sharing data, not necessarily the compute itself, provided there is real technical separation. Procurement law has usable exceptions for public-public cooperation (art. 2.24c Aanbestedingswet, art. 25h Wet Markt en Overheid). No existing framework law was found that specifically regulates infrastructure sharing between layers of government. That is a legal gap, and at the same time an interesting insight for the hackathon: the challenge itself could produce a proposal for such a framework arrangement. See the annex for the full picture and the legal expertise needed. During the hackathon, lawyers of the organisations involved walk around the teams to think along about the legal side and help them further. The lawyers prepare together beforehand in a separate meeting.
 
 More in [docs/legal-context.md](docs/legal-context.md).
+
+## Why join
+
+- The winning team may pitch its solution to the *AI-aanjaagteam*.
+- You work directly with challenge owners from Minbzk, the Belastingdienst, Provincie Zuid-Holland and VNG, and with government lawyers who think along about the legal side.
+- Everything you build is published as open source.
 
 ## Annex: legal expertise needed
 

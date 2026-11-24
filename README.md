@@ -7,7 +7,7 @@ This repository hosts the challenge brief, supporting documents, simulated start
 - **Theme:** Digital autonomy and sovereignty
 - **Date:** 9-10 December 2026
 - **Location:** The Hague Tech, Den Haag
-- **Challenge owners:** Guido Scheuerman (PZH, main challenge owner), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst, to be confirmed)
+- **Challenge owners:** Guido Scheuerman (PZH, main challenge owner), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst)
 - **Tech partner:** [GreenPT](https://greenpt.nl/)
 - **Contact:** [hack@govtechnl.nl](mailto:hack@govtechnl.nl)
 
