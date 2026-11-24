@@ -8,7 +8,7 @@
 > **Challenge owners:** Guido Scheuerman (PZH, main challenge owner, on behalf of the GovTechNL network), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst)
 > **Contact:** [hack@govtechnl.nl](mailto:hack@govtechnl.nl)
 
-This is an English working translation of the Dutch challenge brief. The authoritative version is the Dutch brief on Alkemio.
+This is an English working translation of the Dutch challenge brief. The authoritative version is the Dutch brief: [PDF in this repository](resources/OneGov3_Challenge_Brief_Overheid_Inferentie_Netwerk.pdf), also on [Alkemio](https://alkem.io/onegov-hackathon).
 
 *Minbzk, the Belastingdienst, Provincie Zuid-Holland and municipalities (through VNG) want to share AI compute, instead of every organisation sizing for its own peak. Teams build, supported by government lawyers, a prototype of a federated inference network that distributes AI tasks over capacity and models inside and outside government, with attention to data sensitivity, urgency and cost.*
 
@@ -168,7 +168,7 @@ A first exploration, not yet legally reviewed, points to five areas of law that 
 
 ## Submission
 
-Submissions go through **Alkemio**, the central submission and review platform for OneGov. The link to the challenge space follows.
+Submissions go through [Alkemio](https://alkem.io/onegov-hackathon), the central submission and review platform for OneGov. Join the OneGov community there and register your team.
 
 Each team submits, via Alkemio:
 

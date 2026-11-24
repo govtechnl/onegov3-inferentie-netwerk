@@ -9,6 +9,7 @@ This repository hosts the challenge brief, supporting documents, simulated start
 - **Location:** The Hague Tech, Den Haag
 - **Challenge owners:** Guido Scheuerman (PZH, main challenge owner), Sahin Özaltun (PZH), Melior Hoekstra (Minbzk), Lennart Marijs (Minbzk), Lotte Schipper (Minbzk), Bas Kooistra (VNG), Bas Nijhuis (Belastingdienst)
 - **Tech partner:** [GreenPT](https://greenpt.nl/)
+- **Community and team registration:** [alkem.io/onegov-hackathon](https://alkem.io/onegov-hackathon)
 - **Contact:** [hack@govtechnl.nl](mailto:hack@govtechnl.nl)
 
 ## The challenge in one paragraph
@@ -22,6 +23,7 @@ The full brief is in [CHALLENGE.md](CHALLENGE.md). New teams start with [START_H
 | Path | Purpose | Status |
 |---|---|---|
 | [CHALLENGE.md](CHALLENGE.md) | Full challenge brief (English working translation of the Dutch original) | Available |
+| [resources/OneGov3_Challenge_Brief_Overheid_Inferentie_Netwerk.pdf](resources/OneGov3_Challenge_Brief_Overheid_Inferentie_Netwerk.pdf) | The Dutch challenge brief (authoritative) | Available |
 | [START_HERE.md](START_HERE.md) | Step-by-step start for teams | Available |
 | [docs/](docs/) | Architecture, routing criteria, coordination, market and settlement, legal context, simulation, scenarios, judging criteria, precedents, glossary | Available |
 | [data/network.yaml](data/network.yaml) | Four fictitious organisations (the four roles in the brief), their sites, GPUs, models, tariffs, plus a research and a commercial site | Available (simulated) |
@@ -32,7 +34,7 @@ The full brief is in [CHALLENGE.md](CHALLENGE.md). New teams start with [START_H
 | [gateways/litellm/](gateways/litellm/) | A LiteLLM proxy config per organisation, with mock responses and data-class tags | Available |
 | [docs/api/](docs/api/) | OpenAPI description of the market mock API | Available |
 | [submissions/](submissions/) | Where your team's work lands in your Pull Request | Empty |
-| [resources/](resources/) | Source material as delivered by the challenge owners | Follows |
+| [resources/](resources/) | Source material: the Dutch brief and links to public GPU traces | Available |
 
 **Everything in this repository is simulated or public.** No real requests, data or capacity figures of the organisations involved pass through it. The four organisations in `data/` are fictitious stand-ins for the four roles in the brief.
 
@@ -82,7 +84,7 @@ Issues and pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). Du
 
 ## Submission
 
-Submissions go through **Alkemio**. Each team submits a link to its Pull Request on this repo, a short explanation of approach, assumptions and limitations, and the pitch deck. See [CHALLENGE.md](CHALLENGE.md#submission).
+Submissions go through [Alkemio](https://alkem.io/onegov-hackathon), the OneGov community and submission platform. Each team submits a link to its Pull Request on this repo, a short explanation of approach, assumptions and limitations, and the pitch deck. See [CHALLENGE.md](CHALLENGE.md#submission).
 
 ## Disclaimer
 

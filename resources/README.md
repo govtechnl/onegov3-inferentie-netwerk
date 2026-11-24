@@ -4,7 +4,7 @@ Source material for the challenge.
 
 | What | Status |
 |---|---|
-| Challenge brief (Dutch, authoritative) | On Alkemio; a PDF follows here |
+| Challenge brief (Dutch, authoritative) | [OneGov3_Challenge_Brief_Overheid_Inferentie_Netwerk.pdf](OneGov3_Challenge_Brief_Overheid_Inferentie_Netwerk.pdf), also on [Alkemio](https://alkem.io/onegov-hackathon) |
 | English working translation | [CHALLENGE.md](../CHALLENGE.md) |
 
 ## Public GPU cluster traces
