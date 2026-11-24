@@ -1,0 +1,161 @@
+# Fictitious federated inference network for the OneGov #3 challenge "Overheid Inferentie Netwerk".
+#
+# Everything in this file is invented for the hackathon. The four organisations mirror the four ROLES in
+# the challenge brief (a ministry, an executive agency, a province and a municipal cooperation), but the
+# names, GPU counts, tariffs and availability windows say nothing about any real organisation. The numbers
+# are chosen so that the scenarios in scenarios.yaml produce contention worth routing around.
+#
+# Units
+#   gpus                     number of GPUs at the site
+#   speed_factor             throughput relative to a reference GPU (1.0). Capacity is counted in
+#                            reference GPU-seconds, so a site with 4 GPUs at 1.25 delivers 5 reference
+#                            GPU-seconds per second.
+#   tariff_eur_per_gpu_hour  fictitious price per actual GPU-hour (EUR), used by the settlement starter
+#   kwh_per_gpu_hour         fictitious energy use per actual GPU-hour, for reporting
+
+version: "0.1"
+
+organisations:
+  - id: ministerie
+    name: Ministerie (fictief)
+    role: ministerie
+    gateway_port: 8101
+  - id: uitvoering
+    name: Uitvoeringsorganisatie (fictief)
+    role: uitvoeringsorganisatie
+    gateway_port: 8102
+  - id: provincie
+    name: Provincie (fictief)
+    role: provincie
+    gateway_port: 8103
+  - id: gemeenten
+    name: Gemeentelijke samenwerking (fictief)
+    role: gemeente
+    gateway_port: 8104
+
+models:
+  # Reference GPU-seconds per 1,000 tokens. Fictitious, but in a plausible order: bigger models cost more,
+  # output tokens cost more than input tokens.
+  - id: nl-klein-8b
+    model_class: klein
+    gpu_s_per_1k_in: 0.02
+    gpu_s_per_1k_out: 0.20
+  - id: nl-middel-32b
+    model_class: middel
+    gpu_s_per_1k_in: 0.06
+    gpu_s_per_1k_out: 0.60
+  - id: nl-groot-moe
+    model_class: groot
+    gpu_s_per_1k_in: 0.15
+    gpu_s_per_1k_out: 1.50
+  - id: embed-nl
+    model_class: embedding
+    gpu_s_per_1k_in: 0.01
+    gpu_s_per_1k_out: 0.0
+
+# Extra latency for work that runs elsewhere (seconds), added to the simulated delay.
+transfer_overhead_s:
+  federatie: 1.0
+  onderzoek: 2.0
+  commercieel: 2.0
+
+sites:
+  - id: min-rc1
+    name: Rekencentrum ministerie (fictief)
+    kind: overheid
+    owner: ministerie
+    gpus: 6
+    speed_factor: 1.0
+    models: [nl-klein-8b, nl-middel-32b, embed-nl]
+    tariff_eur_per_gpu_hour: 2.40
+    kwh_per_gpu_hour: 0.9
+    accepts_from_others:
+      data_classes: [openbaar, intern, vertrouwelijk]
+      tiers: [kritiek, interactief, batch]
+    max_external_share: 0.40
+    properties: [eu_jurisdiction, no_training, zdr]
+    availability: []
+
+  - id: uvo-rc1
+    name: Rekencentrum uitvoeringsorganisatie (fictief)
+    kind: overheid
+    owner: uitvoering
+    gpus: 12
+    speed_factor: 1.25
+    models: [nl-klein-8b, nl-middel-32b, nl-groot-moe, embed-nl]
+    tariff_eur_per_gpu_hour: 2.10
+    kwh_per_gpu_hour: 1.0
+    accepts_from_others:
+      data_classes: [openbaar, intern, vertrouwelijk]
+      tiers: [kritiek, interactief, batch]
+    max_external_share: 0.25
+    properties: [eu_jurisdiction, no_training, zdr]
+    availability: []
+
+  - id: prov-dc1
+    name: Datacenter provincie (fictief)
+    kind: overheid
+    owner: provincie
+    gpus: 4
+    speed_factor: 1.0
+    models: [nl-klein-8b, nl-middel-32b, embed-nl]
+    tariff_eur_per_gpu_hour: 2.60
+    kwh_per_gpu_hour: 0.9
+    accepts_from_others:
+      data_classes: [openbaar, intern, vertrouwelijk]
+      tiers: [kritiek, interactief, batch]
+    max_external_share: 0.40
+    properties: [eu_jurisdiction, no_training, zdr]
+    availability: []
+
+  - id: gem-shared
+    name: Gedeelde GPU's gemeenten (fictief)
+    kind: overheid
+    owner: gemeenten
+    gpus: 2
+    speed_factor: 1.0
+    models: [nl-klein-8b, embed-nl]
+    tariff_eur_per_gpu_hour: 2.80
+    kwh_per_gpu_hour: 0.9
+    accepts_from_others:
+      data_classes: [openbaar, intern]
+      tiers: [interactief, batch]
+    max_external_share: 0.30
+    properties: [eu_jurisdiction, no_training, zdr]
+    availability: []
+
+  - id: onderzoek-ai
+    name: Gedeelde onderzoeksfaciliteit (fictief)
+    kind: onderzoek
+    owner: null
+    gpus: 16
+    speed_factor: 1.5
+    models: [nl-klein-8b, nl-middel-32b, nl-groot-moe]
+    tariff_eur_per_gpu_hour: 1.50
+    kwh_per_gpu_hour: 1.1
+    accepts_from_others:
+      data_classes: [openbaar, intern]
+      tiers: [batch]
+    max_external_share: 1.0
+    properties: [eu_jurisdiction, no_training]
+    availability:
+      - start: 8
+        end: 20
+        share: 0.0
+        reason: overdag in gebruik voor onderzoek en training
+
+  - id: eu-cloud
+    name: Commerciële EU-aanbieder (fictief)
+    kind: commercieel
+    owner: null
+    gpus: 32
+    speed_factor: 1.25
+    models: [nl-klein-8b, nl-middel-32b, nl-groot-moe, embed-nl]
+    tariff_eur_per_gpu_hour: 4.50
+    kwh_per_gpu_hour: 1.0
+    accepts_from_others:
+      data_classes: [openbaar, intern]
+      tiers: [kritiek, interactief, batch]
+    max_external_share: 1.0
+    properties: [eu_jurisdiction, no_training, zdr]
+    availability: []

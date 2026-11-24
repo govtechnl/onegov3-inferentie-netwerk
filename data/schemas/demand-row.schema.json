@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/govtechnl/onegov3-inferentie-netwerk/data/schemas/demand-row.schema.json",
+  "title": "One row of a simulated demand file (CSV), after type conversion",
+  "type": "object",
+  "required": ["slot", "time", "workload_id", "org", "tier", "data_class", "task", "requests", "tokens_in",
+               "tokens_out", "ref_gpu_seconds", "description"],
+  "additionalProperties": false,
+  "properties": {
+    "slot": {"type": "integer", "minimum": 0, "maximum": 95},
+    "time": {"type": "string", "pattern": "^([01][0-9]|2[0-3]):(00|15|30|45)$"},
+    "workload_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "org": {"type": "string"},
+    "tier": {"type": "string"},
+    "data_class": {"type": "string"},
+    "task": {"type": "string"},
+    "requests": {"type": "integer", "minimum": 1},
+    "tokens_in": {"type": "integer", "minimum": 0},
+    "tokens_out": {"type": "integer", "minimum": 0},
+    "ref_gpu_seconds": {"type": "number", "minimum": 0},
+    "description": {"type": "string"}
+  }
+}

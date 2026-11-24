@@ -1,0 +1,112 @@
+# Routing, priority and coordination rules for the fictitious network in network.yaml.
+#
+# This file IS the rule set: the starter router in tooling/ reads it and contains no other decision logic
+# than what is described in docs/routing-criteria.md. Change a value here and the outcome changes; the tests
+# in tooling/tests show which behaviour depends on which rule.
+#
+# The data classes below are a deliberate simplification for the hackathon. They are not an official
+# classification scheme; mapping them onto BIO2 / BBN levels, the AVG and fiscal secrecy is part of the
+# challenge.
+
+version: "0.1"
+
+# Capacity is planned and settled in blocks of this many seconds (15 minutes).
+slot_seconds: 900
+
+# Relations between the requesting organisation and a site:
+#   eigen        a site of the requesting organisation itself
+#   federatie    a site of another member of the federation
+#   onderzoek    a shared research facility outside the federation
+#   commercieel  a commercial provider
+data_classes:
+  - id: openbaar
+    label: Openbaar
+    description: Openbare informatie, bijvoorbeeld gepubliceerde stukken of publieksinformatie.
+    allowed_relations: [eigen, federatie, onderzoek, commercieel]
+    commercial_requires: [eu_jurisdiction, zdr]
+  - id: intern
+    label: Intern
+    description: Niet-openbare werkinformatie zonder persoonsgegevens of bijzondere gevoeligheid.
+    allowed_relations: [eigen, federatie, onderzoek, commercieel]
+    commercial_requires: [eu_jurisdiction, zdr, no_training]
+  - id: vertrouwelijk
+    label: Vertrouwelijk
+    description: Persoonsgegevens of vertrouwelijke dossiers. Alleen binnen de federatie van overheden.
+    allowed_relations: [eigen, federatie]
+    commercial_requires: []
+  - id: bijzonder
+    label: Bijzonder
+    description: >-
+      Gegevens die de eigen kolom nooit verlaten, bijvoorbeeld gegevens onder fiscale geheimhouding of
+      bijzondere categorieen persoonsgegevens.
+    allowed_relations: [eigen]
+    commercial_requires: []
+
+# Service tiers. Lower priority number = served first when capacity is scarce.
+#   objective          time: minimise delay; cost: cheapest option that meets max_delay_s
+#   max_delay_s        the norm for this tier (delay beyond the 15-minute block in which work arrives)
+#   price_multiplier   applied to the provider tariff in settlement
+#   receiving_reserve_share  share of every site's capacity that other members may use for this tier,
+#                      even when that site is busy (a "solidarity reserve"); 0 = no reserve
+tiers:
+  - id: kritiek
+    label: Kritiek
+    description: Tijdkritisch, bijvoorbeeld handhaving tijdens een lopende actie.
+    priority: 1
+    objective: time
+    max_delay_s: 5
+    price_multiplier: 1.5
+    receiving_reserve_share: 0.10
+  - id: interactief
+    label: Interactief
+    description: Een medewerker wacht op het antwoord, bijvoorbeeld een assistent of zoekfunctie.
+    priority: 2
+    objective: time
+    max_delay_s: 60
+    price_multiplier: 1.0
+    receiving_reserve_share: 0.0
+  - id: batch
+    label: Batch
+    description: Kan wachten, bijvoorbeeld een nachtelijke classificatie van een documentarchief.
+    priority: 3
+    objective: cost
+    max_delay_s: 28800
+    price_multiplier: 0.6
+    receiving_reserve_share: 0.0
+
+# Which model class fits a task. The first matching rule wins.
+task_models:
+  - task: zoeken
+    model_class: embedding
+  - task: classificeren
+    model_class: klein
+  - task: samenvatten
+    max_tokens_in_per_request: 8000
+    model_class: klein
+  - task: samenvatten
+    model_class: middel
+  - task: chat
+    model_class: middel
+  - task: vertalen
+    model_class: middel
+  - task: analyse
+    model_class: groot
+
+# Coordination rules, after FAIR-Compute (arXiv 2607.28290): unmanaged federation can concentrate load
+# on the receiving system. mode "naive" ignores the three rules below, mode "coordinated" applies them.
+coordination:
+  mode: coordinated
+  prefer_local: true
+  min_gain:
+    seconds: 30
+    ratio: 0.20
+  receiving_protection:
+    max_utilisation: 0.85
+  switching_toll:
+    fixed_s: 5
+    runtime_fraction: 0.10
+  defer_when_no_capacity: true
+
+settlement:
+  pricing: fixed_tariff
+  currency: EUR (fictief)

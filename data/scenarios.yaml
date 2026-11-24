@@ -1,0 +1,113 @@
+# Demo scenarios. Each scenario starts from a simulated demand file in data/demand/ and applies overlays.
+# All numbers are fictitious. Run one with:
+#
+#   cd tooling
+#   python -m inferentienet.simulate --scenario drukke-dag --compare
+#
+# Overlay types
+#   demand_multiplier  multiply existing demand of an organisation (optionally one tier) within [start, end) hours
+#   extra_workload     add requests per 15-minute slot within [start, end) hours
+#   availability       set the available share of a site's capacity within [start, end) hours
+
+version: "0.1"
+
+scenarios:
+  - id: werkdag
+    name: Gewone werkdag
+    description: >-
+      Een doordeweekse dag. Kantoorpieken in de ochtend en vroege middag, batchwerk in de avond en nacht.
+      De gemeenten hebben te weinig eigen capaciteit en geen eigen middelgroot model.
+    demand: demand/werkdag.csv
+    overlays: []
+
+  - id: piek-uitvoering
+    name: Piekdag bij de uitvoeringsorganisatie
+    description: >-
+      Een deadline zorgt voor 2,5 keer zoveel interactieve vraag bij de uitvoeringsorganisatie tussen 08:00
+      en 20:00. De helft van die vraag is 'bijzonder' en mag de eigen kolom niet verlaten.
+    demand: demand/werkdag.csv
+    overlays:
+      - type: demand_multiplier
+        org: uitvoering
+        tier: interactief
+        start: 8
+        end: 20
+        factor: 2.5
+
+  - id: handhaving
+    name: Tijdkritische handhavingsactie
+    description: >-
+      De provincie analyseert tijdens een lopende handhavingsactie beelden en meldingen met een groot model
+      dat zij zelf niet heeft. Kritieke vraag tussen 10:00 en 12:00, met vertrouwelijke gegevens.
+    demand: demand/werkdag.csv
+    overlays:
+      - type: extra_workload
+        id: handhaving
+        org: provincie
+        tier: kritiek
+        data_class: vertrouwelijk
+        task: analyse
+        start: 10
+        end: 12
+        requests_per_slot: 200
+        tokens_in_per_request: 8000
+        tokens_out_per_request: 1500
+        description: Analyse tijdens handhavingsactie
+
+  - id: netcongestie
+    name: Netcongestie in de avondpiek
+    description: >-
+      Het rekencentrum van de uitvoeringsorganisatie staat in een gebied met netcongestie en moet tussen
+      16:00 en 21:00 de helft van zijn vermogen inleveren, terwijl de eigen medewerkers nog doorwerken.
+    demand: demand/werkdag.csv
+    overlays:
+      - type: availability
+        site: uvo-rc1
+        start: 16
+        end: 21
+        share: 0.5
+        reason: netcongestie, vermogensbeperking in de avondpiek
+
+  - id: storing-ministerie
+    name: Storing bij het ministerie
+    description: Het rekencentrum van het ministerie valt tussen 09:00 en 13:00 volledig uit.
+    demand: demand/werkdag.csv
+    overlays:
+      - type: availability
+        site: min-rc1
+        start: 9
+        end: 13
+        share: 0.0
+        reason: storing
+
+  - id: drukke-dag
+    name: Alles tegelijk
+    description: >-
+      Piekdag bij de uitvoeringsorganisatie, een handhavingsactie bij de provincie en netcongestie in de
+      avond. Goed scenario om naive en gecoordineerde routering te vergelijken.
+    demand: demand/werkdag.csv
+    overlays:
+      - type: demand_multiplier
+        org: uitvoering
+        tier: interactief
+        start: 8
+        end: 20
+        factor: 2.5
+      - type: extra_workload
+        id: handhaving
+        org: provincie
+        tier: kritiek
+        data_class: vertrouwelijk
+        task: analyse
+        start: 10
+        end: 12
+        requests_per_slot: 200
+        tokens_in_per_request: 8000
+        tokens_out_per_request: 1500
+        description: Analyse tijdens handhavingsactie
+      - type: availability
+        site: uvo-rc1
+        start: 16
+        end: 21
+        share: 0.5
+        reason: netcongestie, vermogensbeperking in de avondpiek

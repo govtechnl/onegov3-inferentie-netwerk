@@ -1,0 +1,263 @@
+openapi: 3.0.3
+info:
+  title: Market mechanism mock API (OneGov 3, Overheid Inferentie Netwerk)
+  version: 0.1.0
+  description: >-
+    Simplified, simulated market for GPU capacity per 15-minute slot: priority tiers, offers, bids,
+    clearing and settlement. Loosely inspired by congestion management in the electricity market; it is
+    not a model of GOPACS or of any real market. All state is in memory. Run it with
+    `python -m inferentienet.market_api --port 8200` from the tooling folder.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: http://127.0.0.1:8200
+paths:
+  /health:
+    get:
+      summary: Liveness check
+      responses:
+        "200":
+          description: The mock is running.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: {type: string, example: ok}
+                  simulated: {type: boolean, example: true}
+                  pricing: {$ref: "#/components/schemas/Pricing"}
+  /tiers:
+    get:
+      summary: Priority tiers from data/policy.yaml
+      responses:
+        "200":
+          description: Tiers, highest priority first.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tiers:
+                    type: array
+                    items: {$ref: "#/components/schemas/Tier"}
+  /offers:
+    get:
+      summary: List offers
+      parameters:
+        - $ref: "#/components/parameters/Slot"
+      responses:
+        "200":
+          description: Offers, optionally for one slot.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  offers:
+                    type: array
+                    items: {$ref: "#/components/schemas/Offer"}
+    post:
+      summary: Offer spare capacity of a site for one slot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/OfferRequest"}
+      responses:
+        "201":
+          description: Offer accepted.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Offer"}
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /bids:
+    get:
+      summary: List bids
+      parameters:
+        - $ref: "#/components/parameters/Slot"
+      responses:
+        "200":
+          description: Bids, optionally for one slot.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bids:
+                    type: array
+                    items: {$ref: "#/components/schemas/Bid"}
+    post:
+      summary: Bid for capacity in one slot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/BidRequest"}
+      responses:
+        "201":
+          description: Bid accepted.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Bid"}
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /clear:
+    post:
+      summary: Clear one slot
+      description: >-
+        Matches bids to offers: tier first (kritiek before interactief before batch), then highest maximum
+        price, cheapest offers first, and only where the data class and provider rules allow it. A slot can
+        be cleared once.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slot]
+              properties:
+                slot: {type: integer, minimum: 0, maximum: 95}
+      responses:
+        "200":
+          description: Clearing result.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ClearingResult"}
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /settlement:
+    get:
+      summary: All matches and the net position per party
+      responses:
+        "200":
+          description: Settlement overview.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items: {$ref: "#/components/schemas/Match"}
+                  positions:
+                    type: object
+                    additionalProperties: {$ref: "#/components/schemas/Position"}
+  /reset:
+    post:
+      summary: Remove all offers, bids and matches
+      responses:
+        "200":
+          description: State cleared.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: {type: string, example: reset}
+components:
+  parameters:
+    Slot:
+      name: slot
+      in: query
+      required: false
+      description: 15-minute slot of the day, 0 (00:00) to 95 (23:45).
+      schema: {type: integer, minimum: 0, maximum: 95}
+  responses:
+    BadRequest:
+      description: Invalid input.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error: {type: string}
+  schemas:
+    Pricing:
+      type: string
+      enum: [uniform, pay_as_bid, pay_as_offer]
+    Tier:
+      type: object
+      properties:
+        id: {type: string, example: kritiek}
+        label: {type: string}
+        priority: {type: integer}
+        objective: {type: string, enum: [time, cost]}
+        max_delay_s: {type: number}
+        price_multiplier: {type: number}
+        receiving_reserve_share: {type: number}
+    OfferRequest:
+      type: object
+      required: [site, slot, gpu_hours, min_price_eur]
+      properties:
+        site: {type: string, example: uvo-rc1}
+        slot: {type: integer, minimum: 0, maximum: 95, example: 40}
+        gpu_hours: {type: number, example: 2}
+        min_price_eur: {type: number, example: 2.0}
+    Offer:
+      allOf:
+        - $ref: "#/components/schemas/OfferRequest"
+        - type: object
+          properties:
+            id: {type: string, example: offer-1}
+            provider: {type: string, example: uitvoering}
+            remaining: {type: number}
+    BidRequest:
+      type: object
+      required: [org, slot, tier, data_class, model_class, gpu_hours, max_price_eur]
+      properties:
+        org: {type: string, example: gemeenten}
+        slot: {type: integer, minimum: 0, maximum: 95, example: 40}
+        tier: {type: string, example: interactief}
+        data_class: {type: string, example: intern}
+        model_class: {type: string, example: middel}
+        gpu_hours: {type: number, example: 1.5}
+        max_price_eur: {type: number, example: 3.0}
+    Bid:
+      allOf:
+        - $ref: "#/components/schemas/BidRequest"
+        - type: object
+          properties:
+            id: {type: string, example: bid-1}
+            remaining: {type: number}
+    Match:
+      type: object
+      properties:
+        slot: {type: integer}
+        bid_id: {type: string}
+        offer_id: {type: string}
+        org: {type: string}
+        site: {type: string}
+        provider: {type: string}
+        relation: {type: string, enum: [federatie, onderzoek, commercieel]}
+        tier: {type: string}
+        gpu_hours: {type: number}
+        price_eur_per_gpu_hour: {type: number}
+        amount_eur: {type: number}
+        reason: {type: string}
+    ClearingResult:
+      type: object
+      properties:
+        slot: {type: integer}
+        pricing: {$ref: "#/components/schemas/Pricing"}
+        clearing_price_eur:
+          type: number
+          nullable: true
+        matches:
+          type: array
+          items: {$ref: "#/components/schemas/Match"}
+        unmatched_bids:
+          type: array
+          items: {$ref: "#/components/schemas/Bid"}
+        unmatched_offers:
+          type: array
+          items: {$ref: "#/components/schemas/Offer"}
+    Position:
+      type: object
+      properties:
+        bought_gpu_hours: {type: number}
+        paid_eur: {type: number}
+        sold_gpu_hours: {type: number}
+        received_eur: {type: number}
+        net_eur: {type: number}

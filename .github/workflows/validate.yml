@@ -1,0 +1,45 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install starter tooling
+        working-directory: tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Lint with ruff
+        working-directory: tooling
+        run: ruff check .
+
+      - name: Validate data, run tests
+        working-directory: tooling
+        run: pytest -v
+
+      - name: Generated files are up to date
+        working-directory: tooling
+        run: |
+          python -m inferentienet.demand --check
+          python -m inferentienet.litellm_config --check
+
+      - name: Smoke-test the CLIs
+        working-directory: tooling
+        run: |
+          python -m inferentienet.router --org gemeenten --data-class vertrouwelijk --task chat --load uvo-rc1=0.95
+          python -m inferentienet.simulate --scenario drukke-dag --compare
+          python examples/federation_demo.py

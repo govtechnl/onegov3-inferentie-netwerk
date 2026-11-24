@@ -1,0 +1,212 @@
+# LiteLLM proxy config for 'ministerie' (fictitious), GENERATED from data/network.yaml and data/policy.yaml.
+# Do not edit by hand: change the data files and run  python -m inferentienet.litellm_config  in tooling/.
+#
+# Every deployment answers with a mock_response: no model runs and nothing leaves your machine.
+# Run with:  LITELLM_MASTER_KEY=sk-<your-own-random-key> litellm --config gateways/litellm/ministerie.yaml --port 4001
+# Tag each request with exactly ONE data class, e.g. "metadata": {"tags": ["vertrouwelijk"]}.
+model_list:
+- model_name: embedding
+  litellm_params:
+    model: openai/embed-nl
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] lokaal: ministerie / min-rc1 / embed-nl'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+    - bijzonder
+  model_info:
+    id: ministerie-min-rc1-embedding
+- model_name: embedding-federatie
+  litellm_params:
+    model: openai/embed-nl
+    api_base: http://127.0.0.1:8102/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: uitvoering / uvo-rc1 / embed-nl'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-uvo-rc1-embedding
+- model_name: embedding-federatie
+  litellm_params:
+    model: openai/embed-nl
+    api_base: http://127.0.0.1:8103/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: provincie / prov-dc1 / embed-nl'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-prov-dc1-embedding
+- model_name: embedding-federatie
+  litellm_params:
+    model: openai/embed-nl
+    api_base: http://127.0.0.1:8104/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: gemeenten / gem-shared / embed-nl'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-gem-shared-embedding
+- model_name: embedding-extern
+  litellm_params:
+    model: openai/embed-nl
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] extern: eu-cloud / embed-nl'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-eu-cloud-embedding
+- model_name: groot
+  litellm_params:
+    model: openai/nl-groot-moe
+    api_base: http://127.0.0.1:8102/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: uitvoering / uvo-rc1 / nl-groot-moe'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-uvo-rc1-groot
+- model_name: groot-extern
+  litellm_params:
+    model: openai/nl-groot-moe
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] extern: eu-cloud / nl-groot-moe'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-eu-cloud-groot
+- model_name: klein
+  litellm_params:
+    model: openai/nl-klein-8b
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] lokaal: ministerie / min-rc1 / nl-klein-8b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+    - bijzonder
+  model_info:
+    id: ministerie-min-rc1-klein
+- model_name: klein-federatie
+  litellm_params:
+    model: openai/nl-klein-8b
+    api_base: http://127.0.0.1:8102/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: uitvoering / uvo-rc1 / nl-klein-8b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-uvo-rc1-klein
+- model_name: klein-federatie
+  litellm_params:
+    model: openai/nl-klein-8b
+    api_base: http://127.0.0.1:8103/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: provincie / prov-dc1 / nl-klein-8b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-prov-dc1-klein
+- model_name: klein-federatie
+  litellm_params:
+    model: openai/nl-klein-8b
+    api_base: http://127.0.0.1:8104/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: gemeenten / gem-shared / nl-klein-8b'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-gem-shared-klein
+- model_name: klein-extern
+  litellm_params:
+    model: openai/nl-klein-8b
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] extern: eu-cloud / nl-klein-8b'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-eu-cloud-klein
+- model_name: middel
+  litellm_params:
+    model: openai/nl-middel-32b
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] lokaal: ministerie / min-rc1 / nl-middel-32b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+    - bijzonder
+  model_info:
+    id: ministerie-min-rc1-middel
+- model_name: middel-federatie
+  litellm_params:
+    model: openai/nl-middel-32b
+    api_base: http://127.0.0.1:8102/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: uitvoering / uvo-rc1 / nl-middel-32b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-uvo-rc1-middel
+- model_name: middel-federatie
+  litellm_params:
+    model: openai/nl-middel-32b
+    api_base: http://127.0.0.1:8103/federation/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] federatie: provincie / prov-dc1 / nl-middel-32b'
+    tags:
+    - openbaar
+    - intern
+    - vertrouwelijk
+  model_info:
+    id: ministerie-prov-dc1-middel
+- model_name: middel-extern
+  litellm_params:
+    model: openai/nl-middel-32b
+    api_base: http://127.0.0.1:9/v1
+    api_key: not-used
+    mock_response: '[gesimuleerd] extern: eu-cloud / nl-middel-32b'
+    tags:
+    - openbaar
+    - intern
+  model_info:
+    id: ministerie-eu-cloud-middel
+router_settings:
+  enable_tag_filtering: true
+  fallbacks:
+  - embedding:
+    - embedding-federatie
+    - embedding-extern
+  - groot:
+    - groot-extern
+  - klein:
+    - klein-federatie
+    - klein-extern
+  - middel:
+    - middel-federatie
+    - middel-extern
+general_settings:
+  dangerously_allow_mock_testing_request_params: true
