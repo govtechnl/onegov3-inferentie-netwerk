@@ -2,7 +2,7 @@
 
 > *Shared AI compute between government organisations: route every AI request to free capacity, without sensitive data leaving its own organisation.*
 
-This repository hosts the challenge brief, supporting documents, simulated starter data and optional tooling for challenge 1 of **OneGov #3**, part of the OneGov Hackathon Series hosted by [GovTech NL](https://govtechnl.nl). The question was put forward by Guido Scheuerman (Provincie Zuid-Holland / GovTechNL network / sAIdkick) and concerns a collaboration between Minbzk, the Belastingdienst, Provincie Zuid-Holland and municipalities (through VNG).
+This repository hosts the challenge brief, supporting documents, simulated starter data and optional tooling for challenge 1 of **OneGov #3**, part of the OneGov Hackathon Series hosted by [GovTechNL](https://govtechnl.nl). The question was put forward by Guido Scheuerman (Provincie Zuid-Holland / GovTechNL network / sAIdkick) and concerns a collaboration between Minbzk, the Belastingdienst, Provincie Zuid-Holland and municipalities (through VNG).
 
 - **Theme:** Digital autonomy and sovereignty
 - **Date:** 9-10 December 2026
@@ -11,6 +11,9 @@ This repository hosts the challenge brief, supporting documents, simulated start
 - **Tech partner:** [GreenPT](https://greenpt.nl/)
 - **Community and team registration:** [alkem.io/onegov-hackathon](https://alkem.io/onegov-hackathon)
 - **Contact:** [hack@govtechnl.nl](mailto:hack@govtechnl.nl)
+- **Submission deadline:** Thursday 10 December 2026, 14:00, on [Alkemio](https://alkem.io/onegov-hackathon)
+- **Programme, prizes, judging and help:** [EVENT.md](EVENT.md)
+- **Organised by:** GovTechNL with Digicampus, The Hague Tech, VNG Realisatie, Provincie Zuid-Holland, Platform AI & Overheid and Gemeente Den Haag
 
 ## The challenge in one paragraph
 
@@ -33,7 +36,7 @@ The full brief is in [CHALLENGE.md](CHALLENGE.md). New teams start with [START_H
 | [tooling/](tooling/) | Optional Python starter: explainable router, day simulator, settlement, market mock API, federated mock gateways | Available |
 | [gateways/litellm/](gateways/litellm/) | A LiteLLM proxy config per organisation, with mock responses and data-class tags | Available |
 | [docs/api/](docs/api/) | OpenAPI description of the market mock API | Available |
-| [submissions/](submissions/) | Where your team's work lands in your Pull Request | Empty |
+| [submissions/](submissions/) | Where your team's work goes if you build in a fork of this repository | Empty |
 | [resources/](resources/) | Source material: the Dutch brief and links to public GPU traces | Available |
 
 **Everything in this repository is simulated or public.** No real requests, data or capacity figures of the organisations involved pass through it. The four organisations in `data/` are fictitious stand-ins for the four roles in the brief.
@@ -52,6 +55,7 @@ pytest -v
 python -m inferentienet.router --org gemeenten --data-class vertrouwelijk --task chat --load uvo-rc1=0.95
 
 # Replay a busy day and compare naive routing with coordinated routing
+# (coordination protects the partners at the cost of the agency's own delay, see docs/scenarios.md)
 python -m inferentienet.simulate --scenario drukke-dag --compare
 
 # Four federated mock gateways (OpenAI-compatible) and a scripted demo
@@ -80,11 +84,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md#licensing-of-contributions) for the canoni
 
 ## Contributing
 
-Issues and pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). During the hackathon the rule is **one PR per team**.
+Issues and pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). Team submissions go through [Alkemio](https://alkem.io/onegov-hackathon); a Pull Request from your team is welcome but optional.
 
 ## Submission
 
-Submissions go through [Alkemio](https://alkem.io/onegov-hackathon), the OneGov community and submission platform. Each team submits a link to its Pull Request on this repo, a short explanation of approach, assumptions and limitations, and the pitch deck. See [CHALLENGE.md](CHALLENGE.md#submission).
+Submit on [Alkemio](https://alkem.io/onegov-hackathon) before **Thursday 10 December 2026, 14:00**, with a link to your public repository (your fork or your own), a short explanation of your approach, assumptions and limitations, and your pitch deck. A Pull Request into this repository is optional. See [CHALLENGE.md](CHALLENGE.md#submission) and [EVENT.md](EVENT.md#submission).
 
 ## Disclaimer
 

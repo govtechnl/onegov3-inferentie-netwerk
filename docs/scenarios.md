@@ -34,6 +34,7 @@ Reading guide:
 
 - On a normal day both modes work; coordination moves less work around.
 - In the peak scenarios, naive routing spreads the peak over the partners: their own users notice it, the agency less so. Coordinated routing protects the partners and leaves the peak largely with the agency.
+- `drukke-dag`, the scenario in the quick start, shows the trade-off most sharply. Coordinated routing protects the partners (100% of their own users within norm) but makes the executive agency's own interactive work worse: in the per-tier output, `uitvoering/interactief` waits longer and fewer requests stay within norm than with naive routing. That is the effect of the receiving protection and minimum gain in `data/policy.yaml`, a design choice to discuss and improve, not a finding about the real Belastingdienst. Who carries a peak is exactly the allocation question in M4.
 - With grid congestion, coordinated routing also gives the lower mean delay in this setup. Finding out why, with `--out` and the decisions file, is a good first exercise.
 
 ## Add your own scenario

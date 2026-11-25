@@ -1,6 +1,6 @@
 # Legal and administrative context (M3)
 
-> A first exploration from the challenge brief, **not yet reviewed by lawyers and not legal advice**. During the hackathon, lawyers of the organisations involved walk around the teams to think along about the legal side. They prepare together beforehand in a separate meeting. Use them.
+> A first exploration from the challenge brief, **not yet reviewed by lawyers and not legal advice**. During the hackathon, lawyers of the organisations involved walk around the teams to think along about the legal side. They prepare together beforehand in a separate meeting. Use them. Which lawyers join, and at what times, is still to be confirmed; it will be announced on [Alkemio](https://alkem.io/onegov-hackathon).
 
 Must criterion M3 asks teams to name concretely **which legal or administrative vehicle would be needed, and why**. Should-not criterion X1 warns against pretending the legal framework already exists, or reasoning the problem away.
 

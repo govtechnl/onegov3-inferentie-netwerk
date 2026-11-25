@@ -51,4 +51,4 @@ Using another language? Fine. Keep the data files in `data/` as your input, or r
 - Label clearly what is simulated, in the demo and in the pitch.
 - Code and rules open source; put your work in `submissions/<team-name>/`.
 - No real requests, personal data, internal capacity figures or credentials.
-- One Pull Request per team, using the [PR template](.github/pull_request_template.md).
+- Keep your repository public with an open source licence, and submit on [Alkemio](https://alkem.io/onegov-hackathon) before **Thursday 10 December, 14:00**. A Pull Request here is optional.

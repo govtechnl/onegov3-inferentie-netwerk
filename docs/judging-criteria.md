@@ -12,7 +12,7 @@ A submission that fails any Must criterion is not a valid submission, regardless
 | M2 | The prototype shows on which criteria a request is routed, and which data are needed from both the consumer (afnemer) and the provider (aanbieder). | A table or schema of request data and published provider data; see [routing-criteria.md](routing-criteria.md) |
 | M3 | The team names concretely which legal or administrative vehicle (covenant, joint arrangement, service level agreement) would be needed, and why. | A short motivation, linked to the technical design; see [legal-context.md](legal-context.md) |
 | M4 | An allocation and settlement mechanism for scarce capacity is explicit: who gets priority, and how usage is charged or settled against capacity supplied, for both the using and the providing party. A worked-out design suffices. | Rules in configuration or code, or a worked-out design; see [market-and-settlement.md](market-and-settlement.md) |
-| M5 | The solution is open source and contains a readable explanation of the approach. | Public PR under an OSI-approved licence (code) and CC BY 4.0 or CC0 (rules, docs) |
+| M5 | The solution is open source and contains a readable explanation of the approach. | Public repository, linked in Alkemio, under an OSI-approved licence (code) and CC BY 4.0 or CC0 (rules, docs) |
 
 ## ⭐ Should: distinguishing qualities
 
@@ -38,3 +38,7 @@ A submission that fails any Must criterion is not a valid submission, regardless
 | C1 | Alignment with international interoperability frameworks, such as the legal, organisational, semantic and technical layers of the European Interoperability Framework | The design described per layer |
 | C2 | A concrete settlement model including token usage | Tariffs per token or per model class, worked out on a scenario |
 | C3 | A scaling perspective towards more than the four organisations named | How a fifth or fiftieth member joins, and what changes in governance and settlement |
+
+## How judging works
+
+Musts are pass or fail. Teams pitch per challenge in a first round (10 December, 14:00-15:00), a technical jury reviews every submission in Alkemio, and the best team per challenge goes to the final, where the grand jury scores six criteria from 1 to 5. See [EVENT.md](../EVENT.md#how-judging-works).

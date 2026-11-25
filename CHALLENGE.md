@@ -170,13 +170,15 @@ A first exploration, not yet legally reviewed, points to five areas of law that 
 
 Submissions go through [Alkemio](https://alkem.io/onegov-hackathon), the central submission and review platform for OneGov. Join the OneGov community there and register your team.
 
+**Deadline: Thursday 10 December 2026, 14:00.**
+
 Each team submits, via Alkemio:
 
-1. A **link to the team's Pull Request** on this repository, one PR per team (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+1. A **link to your public repository** (your fork of this repository, or your own), with an open source licence and a README that says how to run your work.
 2. A **short explanation** of approach, assumptions and limitations, including the legal or administrative vehicle.
 3. The **pitch deck** (max. 10 slides, PDF or link).
 
-The Alkemio submission is what the jury scores during the hackathon. The Pull Request is still required: it holds the open source code and rules.
+The Alkemio submission is your submission: the jury scores what is in Alkemio. A Pull Request into this repository is welcome but optional.
 
 ## Disclaimer
 
